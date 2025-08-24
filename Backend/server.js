@@ -1,14 +1,16 @@
-import express from 'express';
-const app=express();
-const PORT =5000;
+import express from "express";
+const app = express();
+const PORT = 3000;
+import connectDB from "./config/db.js";
+import userRoutes from "./routes/userRoutes.js"
 
+connectDB();
 
-app.get('/',(req,res)=>{
-    res.send("Backend working properly....");
-});
+app.use("/", userRoutes);
+// app.get('/', (req, res) => {
+//   res.send('Hello from Express!');
+// });
 
-
-app.listen(PORT,()=>{
-    console.log("Server is running on port ",PORT);
-});
-
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:3000`);
+})

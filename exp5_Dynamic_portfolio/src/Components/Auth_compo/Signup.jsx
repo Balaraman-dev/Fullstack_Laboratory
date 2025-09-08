@@ -1,33 +1,27 @@
 import React from "react";
-import dark from "../../public/dark.jpg";
+import dark from "../../../public/dark.jpg";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
-const Signin = () => {
-  const [user, setUser] = useState({ email: "", password: "" });
-  const navigate=useNavigate();
+const Signup = () => {
+  const [user, setUser] = useState({ username: "", email: "", password: "" });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if( !user.email || !user.password){
+    if(!user.username || !user.email || !user.password){
         alert("Fill all fields ...");
         return;
     }
     
     try{
-        const res=await axios.post("http://localhost:5000/signin",{
+       const res = await axios.post("http://localhost:5000/signup", {
+        uname: user.username,
         email: user.email,
         password: user.password,
-        });
-      
-        window.alert(res.data.message);
-        window.location.href = "http://localhost:5173";
-        
-
+});
     }catch(e){
-        console.log("Error occuring in signin",e);
+        console.log("Error occuring in post",e);
     }
   };
 
@@ -37,10 +31,18 @@ const Signin = () => {
 
       <div className="w-1/4 flex flex-col justify-center items-center border-2 border-black gap-8 py-10 px-4 absolute top-[25%] left-[40%] bg-black opacity-60 rounded-2xl text-white ">
 
-        <h3 className="text-2xl font-bold">Login Here</h3>
+        <h3 className="text-2xl font-bold">Register Here</h3>
 
         <form className="w-4/5 flex flex-col gap-8" action="">
-         
+          <input
+            className="p-2 border rounded-lg"
+            value={user.username}
+            onChange={(e) => {
+              setUser((x) => ({ ...x, username: e.target.value }));
+            }}
+            placeholder="Enter Username"
+            type="text"
+          />
           <input
             className="p-2 border rounded-lg"
             value={user.email}
@@ -59,12 +61,11 @@ const Signin = () => {
             type="password"
             placeholder="Enter Password"
           />
-          <p>Already don't have Account  <a className="text-blue-500" href="/signup">Signup</a></p>
           <button
             className="ml-18 py-2 w-1/2 rounded-lg bg-blue-900 hover:bg-gray-600 "
             onClick={handleSubmit}
-          >
-            Sign in
+          ><a href="/signin">
+            Sign Up </a>
           </button>
         </form>
 
@@ -73,4 +74,4 @@ const Signin = () => {
   );
 };
 
-export default Signin;
+export default Signup;

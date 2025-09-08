@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const contactDb = mongoose.createConnection(
-  "mongodb://127.0.0.1:27017/contactDb"
+  "mongodb://localhost:27017/contactDb"
 );
 
 contactDb.on("connected", () => {

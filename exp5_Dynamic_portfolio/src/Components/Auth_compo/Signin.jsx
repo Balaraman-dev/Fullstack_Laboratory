@@ -1,5 +1,5 @@
 import React from "react";
-import dark from "../../public/dark.jpg";
+import dark from "../../../public/dark.jpg";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -17,7 +17,7 @@ const Signin = () => {
     }
     
     try{
-        const res=await axios.post("http://localhost:5000/signin",{
+        const res=await axios.post("http://localhost:3000/signin",{
         email: user.email,
         password: user.password,
         });

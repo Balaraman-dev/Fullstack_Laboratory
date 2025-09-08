@@ -23,7 +23,7 @@ app.get("/userDb", async (req, res) => {
   try {
     const userData = await user.find();
     res.status(200).json(userData);
-    console.log("datasss", userData);
+  
   } catch (err) {
     console.log("error while fetching user data" + err);
   }

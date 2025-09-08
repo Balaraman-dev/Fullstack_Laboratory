@@ -15,7 +15,11 @@ const Signup = () => {
     }
     
     try{
-        const res=axios.post("http://localhost:5000/signup",{user});
+       const res = await axios.post("http://localhost:5000/signup", {
+        uname: user.username,
+        email: user.email,
+        password: user.password,
+});
     }catch(e){
         console.log("Error occuring in post",e);
     }
@@ -60,8 +64,8 @@ const Signup = () => {
           <button
             className="ml-18 py-2 w-1/2 rounded-lg bg-blue-900 hover:bg-gray-600 "
             onClick={handleSubmit}
-          >
-            Sign Up
+          ><a href="/signin">
+            Sign Up </a>
           </button>
         </form>
 

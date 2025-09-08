@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const userDb = mongoose.createConnection("mongodb://127.0.0.1:27017/userDb");
 
 userDb.on("connected", () => {
-  console.log("MongoDB connected successfully for UserDb");
+  console.log("MongoDB connected successfully for User");
 });
 
 const userSchema = new mongoose.Schema({

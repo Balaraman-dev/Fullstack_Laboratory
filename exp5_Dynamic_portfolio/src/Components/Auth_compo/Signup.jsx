@@ -1,35 +1,39 @@
 import React from "react";
-import dark from "../../../public/dark.jpg";
+// import dark from "../../../public/dark.jpg";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const [user, setUser] = useState({ username: "", email: "", password: "" });
+  const navigate=useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
     if(!user.username || !user.email || !user.password){
-        alert("Fill all fields ...");
-        return;
+      alert("Fill all fields ...");
+      return;
     }
     
     try{
-       const res = await axios.post("http://localhost:5000/signup", {
+       const res = await axios.post("http://localhost:3000/signup", {
         uname: user.username,
         email: user.email,
         password: user.password,
-});
+    });
+    navigate("/");
     }catch(e){
         console.log("Error occuring in post",e);
-    }
+      }
+      
   };
 
   return (
     <div className="w-full h-[100vh] flex items-center justify-center relative">
-      <img className="w-[100vw] h-[100vh] opacity-90" src={dark} alt="Img" />
+      {/* <img className="w-[100vw] h-[100vh] opacity-90" src={dark} alt="Img" /> */}
 
-      <div className="w-1/4 flex flex-col justify-center items-center border-2 border-black gap-8 py-10 px-4 absolute top-[25%] left-[40%] bg-black opacity-60 rounded-2xl text-white ">
+      <div className="w-1/4 flex flex-col justify-center items-center border-2 border-black gap-8 py-10 px-4 absolute top-[25%] left-[40%] bg-black rounded-2xl text-white ">
 
         <h3 className="text-2xl font-bold">Register Here</h3>
 

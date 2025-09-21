@@ -2,7 +2,6 @@ const express = require("express");
 const cors = require("cors");
 const contact = require("./db/Contact");
 const user = require("./db/User");
-const { useEffect } = require("react");
 const app = express();
 app.use(express.json());
 const port = 8000;

@@ -1,7 +1,6 @@
 const express = require("express");
 const cors = require("cors");
 const users = require("./db/User");
-const { useEffect } = require("react");
 const app = express();
 const bcrypt =require("bcrypt");
 const jwt=require("jsonwebtoken")

@@ -1,5 +1,5 @@
 import React from "react";
-import dark from "../../../public/dark.jpg";
+// import dark from "../../../public/dark.jpg";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -9,33 +9,38 @@ const Signin = () => {
   const navigate=useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    if( !user.email || !user.password){
-        alert("Fill all fields ...");
-        return;
-    }
-    
-    try{
-        const res=await axios.post("http://localhost:3000/signin",{
-        email: user.email,
-        password: user.password,
-        });
-      
-        window.alert(res.data.message);
-        window.location.href = "http://localhost:5173";
-        
+  e.preventDefault();
 
-    }catch(e){
-        console.log("Error occuring in signin",e);
-    }
-  };
+  if (!user.email || !user.password) {
+    alert("Fill all fields ...");
+    return;
+  }
 
+  try {
+    const response = await axios.post("http://localhost:3000/", {
+      email: user.email,
+      password: user.password,
+    });
+
+    
+  } catch (error) {
+    if (error.response) {
+      alert(error.response.data.message);  
+    } else if (error.request) {
+      alert("Server not responding. Try again later.");
+    } else {
+      alert("An error occurred while signing in.");
+    }
+  }
+  navigate("/portfolio");
+  
+  }
+  
   return (
     <div className="w-full h-[100vh] flex items-center justify-center relative">
-      <img className="w-[100vw] h-[100vh] opacity-90" src={dark} alt="Img" />
+      {/* <img className="w-[100vw] h-[100vh] opacity-90" src={dark} alt="Img" /> */}
 
-      <div className="w-1/4 flex flex-col justify-center items-center border-2 border-black gap-8 py-10 px-4 absolute top-[25%] left-[40%] bg-black opacity-60 rounded-2xl text-white ">
+      <div className="w-1/4 flex flex-col justify-center items-center border-2 border-black gap-8 py-10 px-4 absolute top-[25%] left-[40%] bg-black  rounded-2xl text-white ">
 
         <h3 className="text-2xl font-bold">Login Here</h3>
 

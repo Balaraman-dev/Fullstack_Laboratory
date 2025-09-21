@@ -192,45 +192,49 @@ const PortfolioForm = () => {
 
 const handleSubmit = async (e) => {
   e.preventDefault();
-  
+
   if (validateForm()) {
+    const formData = {
+      userId: "12233423",  
+      about: {
+        name: about.name,
+        role: about.role,
+        description: about.description,
+      },
+      projects,
+      skills,
+      certificate,
+      contact: {
+        email: contact.email,
+        mobile: contact.mobile,
+        location: contact.location,
+        github: contact.github || "",
+        linkedin: contact.linkedin || "",
+      },
+    };
+
     try {
-      const formData = {
-        about,
-        projects,
-        skills,
-        certificate,
-        contact
-      };
-      
-      const response = await fetch('http://localhost:3000/api/portfolio', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData)
+      const response = await fetch("http://localhost:3000/createportfolio", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
       });
-      
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to save portfolio');
-      }
-      
+
       const result = await response.json();
-      alert('Portfolio data saved successfully!');
-      console.log('Saved Portfolio Data:', result.data);
-      
-    } catch (error) {
-      console.error('Error saving portfolio:', error);
-      alert('Error saving portfolio: ' + error.message);
-      
-      if (error.message.includes('Failed to fetch')) {
-        alert('Cannot connect to server. Please make sure your backend is running on http://localhost:3000');
+
+      if (!response.ok) {
+        throw new Error(result.message || "Failed to save portfolio");
       }
+
+      alert("Portfolio data saved successfully!");
+      console.log("Saved Portfolio Data:", result.data);
+
+    } catch (error) {
+      console.error("Error saving portfolio:", error);
+      alert("Error saving portfolio: " + error.message);
     }
   } else {
-    console.log('Validation Errors:', errors);
-    alert('Please fix the validation errors before submitting');
+    alert("Please fix the validation errors before submitting");
   }
 };
 

@@ -4,6 +4,8 @@ export const Projects = ({ projects }) => {
   // Safe log
   console.log(projects?.[0]?.projectTools);
 
+  console.log(typeof projects)
+
   return (
     <div className='w-[95vw] h-auto text-white bg-black py-16 rounded-4xl'>
       <h3 className='text-7xl font-serif text-white flex items-end justify-end pr-32 hover:animate-bounce hover:text-amber-400'>Projects</h3>
@@ -16,18 +18,18 @@ export const Projects = ({ projects }) => {
                 className="w-1/3 hover:shadow-lg shadow-gray-50 p-4 rounded-xl flex flex-col gap-4 justify-center items-center hover:scale-105 duration-300"
               >
                 <p className="text-4xl font-mono text-amber-400">
-                  <a href={pro?.projectLink || "#"} target="_blank" rel="noreferrer">
-                    {pro?.projectTitle}
+                  <a href={pro?.link || "#"} target="_blank" rel="noreferrer">
+                    {pro?.name}
                   </a>
                 </p>
                 <img
                   className="w-11/12 rounded-2xl min-h-[220px]"
                   src="https://neilpatel.com/wp-content/uploads/2015/04/ecommerce.jpg"
-                  alt={pro?.projectTitle || "project"}
+                  alt={pro?.name || "project"}
                 />
-                <p className="w-11/12 text-center">{pro?.projectDesc}</p>
+                <p className="w-11/12 text-center">{pro?.description }</p>
                 <p className='text-xl text-amber-300'>Technologies</p>
-                <div className='w-full flex justify-around bg-blue-300 text-black p-4 rounded-2xl '>
+                {/* <div className='w-full flex justify-around bg-blue-300 text-black p-4 rounded-2xl '>
                   {pro?.projectTools?.length > 0 ? (
                     pro.projectTools.map((tech, index) => (
                       <li  key={index}>{tech}</li>
@@ -35,7 +37,7 @@ export const Projects = ({ projects }) => {
                   ) : (
                     <p>No tools listed</p>
                   )}
-                </div>
+                </div> */}
               </div>
             ))
           ) : (

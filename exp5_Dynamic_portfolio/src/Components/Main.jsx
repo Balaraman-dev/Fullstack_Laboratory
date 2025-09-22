@@ -13,7 +13,7 @@ export  const Main = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/" element={<Signin />} />
         <Route path='/portfolio' element={<Port/>}/>
-        <Route path='/load' element={<Portfolio/>}/>
+        <Route path='/loadportfolio' element={<Portfolio/>}/>
         <Route path="*" element={<h1 className="text-center text-red-600 p-4">404 - Page Not Found</h1>} />
       </Routes>
     </BrowserRouter>

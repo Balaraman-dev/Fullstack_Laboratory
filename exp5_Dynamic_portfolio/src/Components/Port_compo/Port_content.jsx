@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const PortfolioForm = () => {
+  const navigate=useNavigate();
  
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -190,12 +192,20 @@ const PortfolioForm = () => {
     }
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
+  const userId = localStorage.getItem("userId");
+  console.log(userId);
+  if (!userId) {
+    alert("User not logged in. Please log in again.");
+    return;
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+     console.log(userId);
 
   if (validateForm()) {
     const formData = {
-      userId: "12233423",  
+      userId: userId,  
       about: {
         name: about.name,
         role: about.role,
@@ -228,6 +238,7 @@ const handleSubmit = async (e) => {
 
       alert("Portfolio data saved successfully!");
       console.log("Saved Portfolio Data:", result.data);
+      navigate("/loadportfolio");
 
     } catch (error) {
       console.error("Error saving portfolio:", error);

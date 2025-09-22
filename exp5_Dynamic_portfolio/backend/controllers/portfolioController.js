@@ -1,6 +1,7 @@
 const Portfolio = require('../models/Portfolio.js');
 const users =require('../models/user.js');
 const bcrypt=require('bcrypt');
+const jwt = require("jsonwebtoken");
 
 exports.loginUser= async (req, res) => {
     const { email, password } = req.body;
@@ -14,16 +15,16 @@ exports.loginUser= async (req, res) => {
       if (!isMatch) {
         return res.status(400).json({ message: "Invalid credentials" });
       }
-      // const token = jwt.sign(
-      //   { id: user._id, email: user.email }, 
-      //   process.env.JWT_SECRET || "secretkey", 
-      //   { expiresIn: "1h" } 
-      // );
+      const token = jwt.sign(
+        { id: user._id, email: user.email }, 
+        process.env.JWT_SECRET || "secretkey", 
+        { expiresIn: "1h" } 
+      );
 
       res.status(200).json({
         message: "Login successful",
         token,
-        user: { uname: user.uname, email: user.email },
+        user: { uname: user.uname, email: user.email , _id: user._id},
       });
     } catch (err) {
       console.log("Error while signing in: " + err);
@@ -36,7 +37,7 @@ exports.createUser= async (req, res) => {
   const hashpassword=await bcrypt.hash(password,10);
     try {
       const userData = new users({ uname, email, password:hashpassword });
-      // console.log(uname,email,hashpassword);
+
       await userData.save();
       res.status(201).json({ message: "user details saved successfully" });
     } catch (err) {
@@ -88,7 +89,7 @@ exports.getPortfolios = async (req, res) => {
 
 exports.getPortfolio = async (req, res) => {
   try {
-    const portfolio = await Portfolio.findById(req.params.id);
+    const portfolio = await Portfolio.findOne({ userId: req.params.id })
     if (!portfolio) {
       return res.status(404).json({
         success: false,

@@ -9,6 +9,11 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(cors());
 
+app.use( (req, _, next) => {
+  console.log(`Request Received : ${req.url}`);
+  next();
+})
+
 mongoose.connect('mongodb://127.0.0.1:27017/portfolio', {
   useNewUrlParser: true,
   useUnifiedTopology: true

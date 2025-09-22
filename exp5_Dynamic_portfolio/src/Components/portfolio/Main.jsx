@@ -5,11 +5,12 @@ import { Contact } from './Contact';
 import { Home } from './Home';
 
 const Main = () => {
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState({});
 
   const getUsers = async () => {
     try {
-      const res = await fetch("http://localhost:3000/getportfolio");
+      const userid =localStorage.getItem('userId');
+      const res = await fetch(`http://localhost:3000/getportfolio/${userid}`);
       if (!res.ok) throw new Error("Failed to fetch");
 
       const data = await res.json();
@@ -25,16 +26,20 @@ const Main = () => {
     getUsers();
   }, []);
 
-  const aboutText = user?.[0]?.data?.[0]?.about || "Loading...";
-  const projects= user?.[0]?.data?.[0]?.projects ||[];
-  const skills = user?.[0]?.data?.[0]?.skills || [];
+  console.log(user);
+  const aboutText = user?.data?.about || "Loading...";
+  const projects = user?.data?.projects || []  ;
+  const skills = user?.data?.skills || [];
+  const certificate = user?.data?.certificate || "Loading...";
+
+  console.log(projects);
 
 
   return (
     <div className="flex flex-col gap-16 items-center justify-center py-4">
       <Home about={aboutText} />
       <Projects projects={projects}/>
-      <Skills skills={skills}/>
+      <Skills skills={skills}/> 
       <Contact />
     </div>
   );

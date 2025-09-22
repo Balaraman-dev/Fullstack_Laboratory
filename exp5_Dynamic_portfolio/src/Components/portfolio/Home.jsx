@@ -12,11 +12,11 @@ export const Home = ({ about }) => {
         <img src={man} className="w-1/2" alt="profile" />
 
         <div className="flex flex-col justify-center items-center pl-32">
-          <h3 className="text-[8vw] font-serif text-amber-400 hover:animate-spin">
-            Balaraman
+          <h3 className="text-[8vw] font-serif text-amber-400 ">
+            {about.name}
           </h3>
-          <h3 className="text-4xl font-serif text-white">Frontend Developer</h3>
-          <p className="text-center pt-4 text-white">{about}</p>
+          <h3 className="text-4xl font-serif text-white">{about.role}</h3>
+          <p className="text-center pt-4 text-white">{about.description}</p>
         </div>
       </div>
     </div>

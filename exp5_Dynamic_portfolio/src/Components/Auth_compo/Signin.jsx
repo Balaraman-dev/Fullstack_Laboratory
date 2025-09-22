@@ -17,12 +17,23 @@ const Signin = () => {
   }
 
   try {
-    const response = await axios.post("http://localhost:3000/", {
+    const response = await axios.post("http://localhost:3000/login", {
       email: user.email,
       password: user.password,
     });
-
     
+  const userId = response.data.user._id || response.data.user.id;
+
+  console.log("User ID:", response); 
+
+ 
+  localStorage.setItem("token", response.data.token);
+  localStorage.setItem("user", JSON.stringify(response.data.user));
+  localStorage.setItem("userId", userId);
+
+  alert("Login successful!");
+  navigate("/portfolio");
+      
   } catch (error) {
     if (error.response) {
       alert(error.response.data.message);  
@@ -32,7 +43,6 @@ const Signin = () => {
       alert("An error occurred while signing in.");
     }
   }
-  navigate("/portfolio");
   
   }
   

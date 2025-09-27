@@ -8,15 +8,15 @@ export const Home = ({ about }) => {
         Intro
       </h3>
 
-      <div className="w-3/4 flex relative">
+      <div className="w-full flex relative">
         <img src={man} className="w-1/2" alt="profile" />
 
-        <div className="flex flex-col justify-center items-center pl-32">
-          <h3 className="text-[8vw] font-serif text-amber-400 ">
+        <div className=" flex flex-col justify-center items-center ">
+          <h3 className=" text-[8vw] font-serif text-amber-400 ">
             {about.name}
           </h3>
           <h3 className="text-4xl font-serif text-white">{about.role}</h3>
-          <p className="text-center pt-4 text-white">{about.description}</p>
+          <p className="text-center pt-4 text-white w-3/4">{about.description}</p>
         </div>
       </div>
     </div>

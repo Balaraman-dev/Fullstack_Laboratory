@@ -1,15 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const PortfolioForm = () => {
+const PortfolioForm = ({user}) => {
   const navigate=useNavigate();
- 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
+  
   const [about, setAbout] = useState({
-    name: '',
-    role: '',
-    description: ''
+    name:user?.data?.about?.name || '',
+    role: user?.data?.about?.role || '',
+    description: user?.data?.about?.description || ''
   });
 
   const [projects, setProjects] = useState([
@@ -22,19 +20,36 @@ const PortfolioForm = () => {
     }
   ]);
 
+    useEffect(() => {
+    if (user?.data?.skills) {
+      setProjects(user.data.projects);
+    } else {
+      setProjects([]);
+    }
+  }, [user]);
+
   const [skills, setSkills] = useState(['']);
 
-  const [certificate, setCertificate] = useState({
-    name: '',
-    link: ''
+  useEffect(() => {
+    if (user?.data?.skills) {
+      setSkills(user.data.skills);
+    } else {
+      setSkills([]);
+    }
+  }, [user]);
+
+
+    const [certificate, setCertificate] = useState({
+    name: user?.data?.certificate?.name ||  '',
+    link: user?.data?.certificate?.link || ''
   });
 
   const [contact, setContact] = useState({
-    email: '',
-    mobile: '',
-    location: '',
-    github: '',
-    linkedin: ''
+    email: user?.data?.contact?.email || '',
+    mobile:user?.data?.contact?.mobile || '',
+    location:user?.data?.contact?.location || '',
+    github:user?.data?.contact?.github || '',
+    linkedin:user?.data?.contact?.linkedin || ''
   });
 
   const [errors, setErrors] = useState({});
@@ -199,33 +214,35 @@ const PortfolioForm = () => {
     return;
   }
 
-  const handleSubmit = async (e) => {
+    const handleSubmit = async (e) => {
     e.preventDefault();
-     console.log(userId);
 
-  if (validateForm()) {
+    if (!validateForm()) {
+      alert("Please fix the validation errors before submitting");
+      return;
+    }
+
     const formData = {
-      userId: userId,  
-      about: {
-        name: about.name,
-        role: about.role,
-        description: about.description,
-      },
+      userId,
+      about,
       projects,
       skills,
       certificate,
-      contact: {
-        email: contact.email,
-        mobile: contact.mobile,
-        location: contact.location,
-        github: contact.github || "",
-        linkedin: contact.linkedin || "",
-      },
+      contact,
     };
+   
+    console.log(JSON.stringify(formData));
 
     try {
-      const response = await fetch("http://localhost:3000/createportfolio", {
-        method: "POST",
+      const isUpdate = user?.data; 
+      const url = isUpdate
+        ? `http://localhost:3000/updateportfolio/${userId}`
+        : "http://localhost:3000/createportfolio";
+
+      const method = isUpdate ? "PUT" : "POST";
+
+      const response = await fetch(url, {
+        method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
@@ -236,18 +253,18 @@ const PortfolioForm = () => {
         throw new Error(result.message || "Failed to save portfolio");
       }
 
-      alert("Portfolio data saved successfully!");
+      alert(isUpdate ? "Portfolio updated successfully!" : "Portfolio created successfully!");
       console.log("Saved Portfolio Data:", result.data);
+
       navigate("/loadportfolio");
 
     } catch (error) {
       console.error("Error saving portfolio:", error);
       alert("Error saving portfolio: " + error.message);
     }
-  } else {
-    alert("Please fix the validation errors before submitting");
-  }
-};
+  };
+
+  
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-gray-50 min-h-screen">
@@ -603,7 +620,7 @@ const PortfolioForm = () => {
             type="submit"
             className="px-8 py-3 bg-green-600 text-white font-medium rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition transform hover:scale-105"
           >
-            Save Portfolio
+            {user?.data ? "Update Portfolio" : "Create Portfolio"}
           </button>
         </div>
       </form>

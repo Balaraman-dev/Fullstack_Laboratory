@@ -22,16 +22,42 @@ const Signup = () => {
         email: user.email,
         password: user.password,
     });
-    navigate("/");
     }catch(e){
         console.log("Error occuring in post",e);
-      }
+    }
+
+        try {
+          const response = await axios.post("http://localhost:3000/login", {
+            email: user.email,
+            password: user.password,
+          });
+          
+        const userId = response.data.user._id || response.data.user.id;
+
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+        localStorage.setItem("userId", userId);
+
+        alert("Login successful!");
+        
+        
+        
+      } catch (error) {
+        if (error.response) {
+          alert(error.response.data.message);  
+        } else if (error.request) {
+          alert("Server not responding. Try again later.");
+        } else {
+            alert("An error occurred while signing in.");
+          }
+        }
+        
+        navigate("/portfolio");
+    } ;  
       
-  };
 
   return (
     <div className="w-full h-[100vh] flex items-center justify-center relative">
-      {/* <img className="w-[100vw] h-[100vh] opacity-90" src={dark} alt="Img" /> */}
 
       <div className="w-1/4 flex flex-col justify-center items-center border-2 border-black gap-8 py-10 px-4 absolute top-[25%] left-[40%] bg-black rounded-2xl text-white ">
 
@@ -68,8 +94,8 @@ const Signup = () => {
           <button
             className="ml-18 py-2 w-1/2 rounded-lg bg-blue-900 hover:bg-gray-600 "
             onClick={handleSubmit}
-          ><a href="/signin">
-            Sign Up </a>
+          >
+            Sign Up 
           </button>
         </form>
 

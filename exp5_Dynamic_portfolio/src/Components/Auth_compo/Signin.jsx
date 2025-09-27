@@ -24,15 +24,15 @@ const Signin = () => {
     
   const userId = response.data.user._id || response.data.user.id;
 
-  console.log("User ID:", response); 
-
  
   localStorage.setItem("token", response.data.token);
   localStorage.setItem("user", JSON.stringify(response.data.user));
   localStorage.setItem("userId", userId);
 
   alert("Login successful!");
-  navigate("/portfolio");
+  
+  navigate("/loadportfolio");
+  
       
   } catch (error) {
     if (error.response) {
@@ -48,9 +48,10 @@ const Signin = () => {
   
   return (
     <div className="w-full h-[100vh] flex items-center justify-center relative">
-      {/* <img className="w-[100vw] h-[100vh] opacity-90" src={dark} alt="Img" /> */}
 
       <div className="w-1/4 flex flex-col justify-center items-center border-2 border-black gap-8 py-10 px-4 absolute top-[25%] left-[40%] bg-black  rounded-2xl text-white ">
+
+      
 
         <h3 className="text-2xl font-bold">Login Here</h3>
 

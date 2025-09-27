@@ -71,22 +71,6 @@ exports.createPortfolio = async (req, res) => {
   }
 };
 
-
-exports.getPortfolios = async (req, res) => {
-  try {
-    const portfolios = await Portfolio.find().sort({ createdAt: -1 });
-    res.json({
-      success: true,
-      data: portfolios
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: 'Server Error'
-    });
-  }
-};
-
 exports.getPortfolio = async (req, res) => {
   try {
     const portfolio = await Portfolio.findOne({ userId: req.params.id })
@@ -110,19 +94,19 @@ exports.getPortfolio = async (req, res) => {
 
 exports.updatePortfolio = async (req, res) => {
   try {
-    const portfolio = await Portfolio.findByIdAndUpdate(
-      req.params.id,
+    const portfolio = await Portfolio.findOneAndUpdate(
+      { userId: req.params.id },  
       req.body,
-      { new: true, runValidators: false } 
+      { new: true, runValidators: true } 
     );
-    
+
     if (!portfolio) {
       return res.status(404).json({
         success: false,
         error: 'Portfolio not found'
       });
     }
-    
+
     res.json({
       success: true,
       data: portfolio
@@ -134,6 +118,7 @@ exports.updatePortfolio = async (req, res) => {
     });
   }
 };
+
 
 exports.addProject = async (req, res) => {
   try {

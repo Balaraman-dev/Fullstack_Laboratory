@@ -46,26 +46,26 @@ export default function Profile() {
   return (
     <div className="max-w-2xl mx-auto mt-10 p-6 bg-white rounded-xl shadow-lg">
       {user && (
-        <div className="flex flex-col items-center mb-8 bg-gray-400 py-6 px-2 rounded-xl ">
-          <div className="w-24 h-24 rounded-full bg-gray-100 flex items-center justify-center text-3xl font-bold text-gray-500 mb-4">
+        <div className="flex flex-col items-center mb-8 bg-gray-900 py-6 text-white px-2 rounded-xl ">
+          <div className="w-24 h-24 rounded-full flex items-center justify-center text-3xl font-bold bg-amber-500 mb-4">
             {user.uname?.charAt(0).toUpperCase()}
           </div>
-          <h3 className="text-2xl font-bold text-gray-800  capitalize ">{user.uname}</h3>
+          <h3 className="text-2xl font-bold  capitalize ">{user.uname}</h3>
           {editing ? (
             <div className="mt-2 w-full flex flex-col items-center">
               <textarea
-                className="w-3/4 p-2 border rounded-xl bg-gray-100"
+                className="w-3/4 p-2 border rounded-xl text-black bg-gray-100"
                 value={bio}
                 onChange={e => setBio(e.target.value)}
                 rows={3}
               />
               <div className="flex gap-2 mt-2">
                 <button className="px-4 py-2 bg-blue-600 text-white rounded-xl" onClick={saveBio}>Save</button>
-                <button className="px-4 py-2 bg-gray-400 text-white rounded-xl" onClick={() => setEditing(false)}>Cancel</button>
+                <button className="px-4 py-2 bg-red-600 text-white rounded-xl" onClick={() => setEditing(false)}>Cancel</button>
               </div>
             </div>
           ) : (
-            <p className="text-gray-600 mt-2">{user.bio}</p>
+            <p className="text-lg mt-2">{user.bio}</p>
           )}
           <div className="mt-4 flex items-center space-x-4">
             {me?.id !== user._id && (
@@ -84,11 +84,11 @@ export default function Profile() {
                 Edit Profile
               </button>
             )}
-            <span className="text-gray-700 font-medium">
+            <span className="bg-blue-700 px-4 py-2 rounded  font-medium">
               Followers: {user.followers?.length || 0}
             </span>
           </div>
-          <div className="mt-6 w-full">
+          <div className="mt-6 w-full text-white">
             <FollowersList followers={user.followers || []} />
           </div>
         </div>

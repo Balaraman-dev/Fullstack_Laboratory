@@ -23,11 +23,22 @@ export default function Navbar() {
             <Link to="/signup" className="px-3 py-2 rounded border bg-white">Sign up</Link>
           </>
         )}
+        {userId && (
+            <Link to={`/`} className="ml-4 flex items-center text-white">
+              <span className="bg-gray-600 px-4 py-2 rounded">Feeds</span>
+            </Link>
+          )}
          {userId && (
-          <Link to={`/profile/${userId}`} className="ml-4 flex items-center text-white">
-            <span className="bg-green-600 px-4 py-2 rounded">Profile</span>
+           <Link to={`/peoples`} className="ml-4 flex items-center text-white">
+            <span className="bg-blue-600 px-4 py-2 rounded">Peoples</span>
           </Link>
         )}
+
+        {userId && (
+         <Link to={`/profile/${userId}`} className="ml-4 flex items-center text-white">
+           <span className="bg-green-600 px-4 py-2 rounded">Profile</span>
+         </Link>
+       )}
       </div>
     </nav>
   );

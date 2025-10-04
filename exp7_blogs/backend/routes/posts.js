@@ -10,12 +10,13 @@ router.post("/", auth, async (req, res) => {
   if (!content) return res.status(400).json({ error: "Content required" });
   const post = new Post({ author: req.user._id, content });
   await post.save();
+  await post.populate("author", "uname");
   res.json(post);
 });
 
 // Get all posts for current user
 router.get("/me", auth, async (req, res) => {
-  const posts = await Post.find({ author: req.user._id }).sort({ createdAt: -1 });
+  const posts = await Post.find({ author: req.user._id }).sort({ createdAt: -1 }).populate("author", "uname");
   res.json(posts);
 });
 
@@ -44,7 +45,8 @@ router.post("/:id/like", auth, async (req, res) => {
   if (idx === -1) post.likes.push(req.user._id);
   else post.likes.splice(idx, 1);
   await post.save();
-  res.json({ success: true, likes: post.likes.length });
+  await post.populate("author", "uname");
+  res.json({ success: true, likes: post.likes.length, post });
 });
 
 // Get all posts (for feeds)

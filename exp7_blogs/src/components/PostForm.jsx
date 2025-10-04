@@ -17,8 +17,8 @@ export default function PostForm({ onPosted }) {
     }
   };
   return (
-    <form onSubmit={submit} className="mb-4">
-      <textarea className="w-full border rounded-xl bg-gray-900 text-white p-5" value={content} onChange={(e) => setContent(e.target.value)} placeholder="What's happening?" maxLength={280} />
+    <form onSubmit={submit} className="mb-4 ">
+      <textarea className="w-full rounded-xl bg-gray-900 text-white p-5 " value={content} onChange={(e) => setContent(e.target.value)} placeholder="What's happening?" maxLength={280} />
       <div className="flex justify-end mt-2"><button className="px-8 py-2 bg-blue-800  text-white rounded-xl hover:bg-blue-600 ">Post</button></div>
     </form>
   );

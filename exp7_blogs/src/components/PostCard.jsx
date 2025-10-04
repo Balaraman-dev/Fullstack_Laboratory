@@ -24,14 +24,14 @@ export default function PostCard({ post, onAction }) {
     <div className="px-3 py-4 border rounded-xl bg-gray-900 mb-2 ">
       <div className="flex justify-between">
         <p className="mt-2 text-lg font-mono px-2 text-white ">{post.content}</p>
-        <div className="space-x-2 flex items-center">
-          <button onClick={like} className="px-2 text-xl">
-            {liked ? "💖" : "💟"} <span className="ml-1 text-white text-sm">{post.likes?.length || 0}</span>
+        <div className="flex  bg-gray-200 rounded-xl">
+          <button onClick={like} className="px-2 text-2xl flex items-center hover:scale-110 duration-300">
+            {liked ? "💖" : "💟"} <span className=" text-xl text-black">{post.likes?.length || 0}</span>
           </button>
           {me?.id === post.author?._id && <button onClick={del} className=" bg-red-500  text-white  px-4 py-2 rounded-xl hover:bg-red-400">Delete</button>}
         </div>
       </div>
-      <div className="bg-gray-100 rounded-xl px-4 py-1 mt-3">{post.author?.uname || "Unknown"}  | <span className="text-sm text-gray-500"> {new Date(post.createdAt).toLocaleString()}</span></div>
+      <div className="bg-amber-500 rounded-xl px-4 py-1 mt-3 capitalize text-lg font-bold">{post.author?.uname || "Unknown"}  | <span className="text-sm text-white"> {new Date(post.createdAt).toLocaleString()}</span></div>
     </div>
   );
 }

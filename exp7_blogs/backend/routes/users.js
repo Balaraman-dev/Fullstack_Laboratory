@@ -14,14 +14,14 @@ router.get("/:id", async (req, res) => {
 
 // Get user posts
 router.get("/:id/posts", async (req, res) => {
-  const posts = await Post.find({ author: req.params.id }).sort({ createdAt: -1 });
+  const posts = await Post.find({ author: req.params.id }).sort({ createdAt: -1 }).populate("author", "uname");
   res.json(posts);
 });
 
 // Follow/Unfollow user
 router.post("/:id/follow", auth, async (req, res) => {
   const targetUser = await User.findById(req.params.id);
-  const currentUser = req.user;
+  const currentUser = req.user;  
   if (!targetUser) return res.status(404).json({ error: "User not found" });
 
   const isFollowing = targetUser.followers.includes(currentUser._id);

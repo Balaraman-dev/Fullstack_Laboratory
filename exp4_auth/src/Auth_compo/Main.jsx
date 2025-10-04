@@ -10,7 +10,6 @@ export const Main = () => {
       <Routes>
         <Route path="/" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
-        {/* <Route path="/Dashboard" element={<Dashboard />} /> */}
         <Route path="*" element={<h1 className="text-center text-red-600 p-4">404 - Page Not Found</h1>} />
       </Routes>
     </BrowserRouter>

@@ -9,30 +9,30 @@ export default function Navbar() {
   const logout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("me");
-    navigate("/");
+    navigate("/signin");
   };
   return (
-    <nav className="flex items-center justify-between px-24 py-4 shadow bg-gray-900">
-      <Link to="/" className="font-bold text-lg px-3 py-1 text-white rounded-md">MicroBlogs</Link>
+    <nav className="flex items-center justify-between px-24 py-4 shadow bg-gray-900 sticky top-2">
+      <Link to="/" className="font-bold  px-3 py-1 rounded-md animate-bounce text-xl text-white text-shadow-lg text-shadow-blue-500 ">OLX - Buying Anywhere</Link>
       <div className="space-x-4 flex">
         {token ? (
           <button onClick={logout} className="px-3 py-1 rounded bg-red-500 text-white">Logout</button>
         ) : (
           <>
-            <Link to="/signin" className="px-3 py-2 rounded bg-blue-600 text-white">Sign in</Link>
+            <Link to="/" className="px-3 py-2 rounded bg-blue-600 text-white">Sign in</Link>
             <Link to="/signup" className="px-3 py-2 rounded border bg-white">Sign up</Link>
           </>
         )}
         {userId && (
             <Link to={`/`} className="ml-4 flex items-center text-white">
-              <span className="bg-gray-600 px-4 py-2 rounded">Feeds</span>
+              <span className="bg-gray-600 px-4 py-2 rounded">Products</span>
             </Link>
           )}
-         {userId && (
+         {/* {userId && (
            <Link to={`/peoples`} className="ml-4 flex items-center text-white">
             <span className="bg-blue-600 px-4 py-2 rounded">Peoples</span>
           </Link>
-        )}
+        )} */}
 
         {userId && (
          <Link to={`/profile/${userId}`} className="ml-4 flex items-center text-white">

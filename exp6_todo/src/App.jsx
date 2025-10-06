@@ -1,54 +1,33 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import Signup from './pages/Signup';
+import Signin from './pages/Signin';
+import Todos from './pages/Todos';
 
 function App() {
-  const [todos, setTodos] = useState([]);
-  const [text, setText] = useState('');
+  const [token, setToken] = useState(localStorage.getItem('token'));
 
-  useEffect(() => {
-    fetchTodos();
-  }, []);
-
-  const fetchTodos = async () => {
-    const res = await axios.get('http://localhost:5000/api/todos');
-    setTodos(res.data);
-  };
-
-  const addTodo = async (e) => {
-    e.preventDefault();
-    if (!text.trim()) return;
-
-    const newTodo = { text };
-    const res = await axios.post('http://localhost:5000/api/todos', newTodo);
-    setTodos([...todos, res.data]);
-    setText('');
-  };
-
-  const deleteTodo = async (id) => {
-    await axios.delete(`http://localhost:5000/api/todos/${id}`);
-    setTodos(todos.filter(todo => todo._id !== id));
-  };
+  function saveToken(t) {
+    localStorage.setItem('token', t);
+    setToken(t);
+  }
+  function logout() {
+    localStorage.removeItem('token');
+    setToken(null);
+  }
 
   return (
-    <div className='w-full h-[100vh] flex items-center justify-center '>
-    <div className='flex flex-items justify-center p-12 border-2 flex-col  rounded-xl '>
-      <h1 className='text-3xl font-bold text-center mb-4'> Todo </h1>
-
-      <form onSubmit={addTodo} className=' flex gap-4 '>
-        <input type="text" className='border-2 rounded-xl px-2 py-2 bg-white' value={text} onChange={(e) => setText(e.target.value)} placeholder="Add a new todo"/>
-        <button className='bg-green-600  text-white font-semibold px-4 py-2 rounded-xl hover:bg-green-500' type="submit">Add</button>
-      </form>
-
-      <ul className='flex flex-col gap-2 w-full justify-around pt-4' >
-        {todos.map((todo) => (
-          <li key={todo._id} className='w-full flex justify-between px-4 border-2 py-2 rounded-xl items-center'>
-            <span className='text-xl'>{todo.text}</span>
-            <button className='bg-red-600 px-3 py-2 rounded-xl text-white hover:bg-red-500' onClick={() => deleteTodo(todo._id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
-    </div>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Signup />} />
+        <Route path="/signin" element={<Signin saveToken={saveToken} />} />
+        <Route
+          path="/todos"
+          element={token ? <Todos token={token} logout={logout}/> : <Navigate to="/signin" />}
+        />
+        <Route path="*" element={<Navigate to="/todos" />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

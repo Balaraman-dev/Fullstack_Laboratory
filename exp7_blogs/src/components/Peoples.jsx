@@ -52,12 +52,12 @@ export default function Peoples() {
   return (
     <div className="max-w-2xl mx-auto mt-10 p-6 bg-white rounded-xl shadow-lg">
       <h2 className="text-2xl font-bold mb-6 text-gray-800">All People</h2>
-      <input
+      {/* <input
         className="w-full mb-4 p-2 border rounded-xl bg-gray-100"
         placeholder="Search users by username..."
         value={search}
         onChange={e => setSearch(e.target.value)}
-      />
+      /> */}
       {loading ? <div className="text-gray-500">Loading...</div> : (
         <ul className="space-y-4 mb-8">
           {users.map((user) => (

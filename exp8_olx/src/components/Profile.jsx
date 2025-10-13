@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import PostCard from "./PostCard";
-import FollowersList from "./FollowersList";
 
 export default function Profile() {
   const { id } = useParams();

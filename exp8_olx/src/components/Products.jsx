@@ -29,7 +29,7 @@ export default function Products() {
     <div className="max-w-4xl mx-auto p-6">
       <div className="flex items-center gap-4 mb-6">
         <input value={q} onChange={e=>setQ(e.target.value)} placeholder="Search products" className="flex-1 p-2 border rounded" />
-        <Link to="/postproducts" className="px-4 py-2 bg-blue-600 text-white rounded">Post</Link>
+        <Link to="/postproducts" className="px-4 py-2 bg-blue-600 text-white rounded">Search</Link>
       </div>
       <div className="space-y-4">
         {loading && <div className="text-center text-gray-600">Loading...</div>}

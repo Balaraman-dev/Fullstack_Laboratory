@@ -2,18 +2,38 @@ const express = require('express');
 const router = express.Router();
 const Product = require('../models/Products');
 const auth = require('../middleware/auth');
+const multer = require('multer');
+const path = require('path');
 
-// Create product
-router.post('/', auth, async (req, res) => {
+// configure multer storage to ./uploads
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.join(__dirname, '..', 'uploads'));
+  },
+  filename: function (req, file, cb) {
+    const ext = path.extname(file.originalname);
+    const name = file.fieldname + '-' + Date.now() + ext;
+    cb(null, name);
+  }
+});
+const upload = multer({ storage });
+
+// Create product (accept file upload)
+router.post('/', auth, upload.single('image'), async (req, res) => {
   try {
-    const { pname, desc, price, location, image } = req.body;
+    const { pname, desc, price, location } = req.body;
+    let imagePath = '';
+    if (req.file) {
+      // store relative path like /uploads/filename
+      imagePath = `/uploads/${req.file.filename}`;
+    }
     const p = await Product.create({
       author: req.user.id,
       pname,
       desc,
       price,
       location,
-      image,
+      image: imagePath,
     });
     res.json(p);
   } catch (err) {

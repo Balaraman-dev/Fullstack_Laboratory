@@ -50,7 +50,7 @@ export default function Chat() {
       )}
       <div className="h-80 overflow-auto space-y-2 mb-4 p-2 bg-white rounded shadow">
         {messages.map((m, i) => (
-          <div key={i} className="p-2 bg-gray-100 rounded">{m.from}: {m.text}</div>
+          <div key={i} className="p-2 bg-gray-100 rounded"> {m.text}</div>
         ))}
       </div>
       <div className="flex gap-2">

@@ -18,8 +18,6 @@ export default function Navbar() {
 
         <Link to="/" className="text-white px-3 py-2 rounded bg-blue-800">Products</Link>
         <Link to="/postproducts" className="text-white px-3 py-2 rounded bg-green-600">Post</Link>
-        {/* <Link to="/chat/general" className="text-white px-3 py-2 rounded hover:bg-gray-800">Chat</Link>
-        <Link to="/payment" className="text-white px-3 py-2 rounded hover:bg-gray-800">Payments</Link> */}
 
         {token ? (
           <button onClick={logout} className="px-3 py-1 rounded bg-red-500 text-white">Logout</button>
@@ -30,11 +28,6 @@ export default function Navbar() {
           </>
         )}
 
-        {/* {userId && (
-         <Link to={`/profile/${userId}`} className="ml-4 flex items-center text-white">
-           <span className="bg-green-600 px-4 py-2 rounded">Profile</span>
-         </Link>
-       )} */}
       </div>
     </nav>
   );

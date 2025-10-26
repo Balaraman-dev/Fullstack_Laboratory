@@ -57,7 +57,7 @@ export default function PostProducts({ onPosted }) {
 
   return (
     <div className="w-5/8 m-auto flex items-center justify-center">
-      <form onSubmit={submit} className="w-1/2 m-16 bg-gray-900 text-white flex flex-col item-center justify-center gap-4 py-8 px-16 rounded-xl" >
+      <form onSubmit={submit} className="w-1/2 m-16 bg-gray-900 text-white flex flex-col item-center justify-center gap-4 py-8 px-16  rounded-xl" >
       <h1 className="text-2xl font-bold text-amber-400 m-auto py-4 ">New Post</h1>
 
       <input type="text" placeholder="Location" name="pname"  className="placeholder-blue-100 bg-gray-300 rounded-xl text-black p-2"  value={product.pname}  onChange={handleChange}/>
